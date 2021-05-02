@@ -3,10 +3,12 @@
 #include <string.h>
 #define MAX 200
 
-struct quadro
+struct pixel
 {
-    char linha[MAX];
-} QUADRO;
+    int r;
+    int g;
+    int b;
+};
 
 //altura e largura da matriz
 int altura;
@@ -72,76 +74,6 @@ void cabeca(FILE *in, FILE *out)
     }
 }
 
-void inverteIntervalo(struct quadro matrix[], FILE *out, int initial, int final)
-{
-
-    int j = final;
-    int m = initial;
-
-    while (j != m)
-    {
-
-        struct quadro temp;
-        temp = matrix[m];
-        matrix[j] = temp;
-        matrix[m] = matrix[j];
-
-        j--;
-        m++;
-    }
-    for (int i = initial; i <= final; i++)
-    {
-        fputs(matrix[i].linha, out);
-    }
-}
-
-int flipHor(struct quadro matrix[], int initial, int final, FILE *out)
-{
-
-    //printf("%s", matrix[0].linha);
-    if (final >= largura * altura)
-        return 1;
-
-    else
-    {
-
-        inverteIntervalo(matrix, out, initial, final);
-        initial = final + 1;
-        final += largura;
-
-        return flipHor(matrix, initial, final, out);
-    }
-}
-/*
-
-int  flipH(char mat[][], int inicio, int final, FILE *out)
-{
-    if (final >= largura * altura)
-        return 1;
-    else
-    {
-        char temp[final - inicio][MAX];
-        int j = inicio;
-        int m = final;
-        while (j < m)
-        {
-            char temp[final - inicio][MAX] = mat[m];
-            mat[m] = mat[j];
-            mat[j] = temp;
-            j++;
-            m--;
-        }
-        for (int f = inicio; f <= final; f++)
-        {
-            fputs(&mat[f], out);
-            fputc('\n', out);
-        }
-        inicio = final+1;
-        final += largura;
-        return flipH(mat, inicio, final, out);
-    }
-}*/
-
 int main(int argc, char *argv[])
 {
     //abertura dos arquivos enciados como parâmetros
@@ -163,72 +95,40 @@ int main(int argc, char *argv[])
 
     cabeca(imagem, output);
 
-    struct quadro matrix[altura * largura];
+    struct pixel matrix[altura][largura];
 
-    char c[300];
-    char mat[altura * largura][MAX];
-    for (int i = 0; i < altura * largura; i++)
+    int *c;
+    int tamanho = altura * largura;
+    for (int i = 0; i < altura; i++)
     {
-
-        fgets(c, 299, imagem);
-        int m_ultimo;//marca último indice
-        for (int m = 0; c[m] != '\0' && c[m] != '#'; m++)
+        for (int j = 0; j < largura; j++)
         {
-            //fputc(c[m], output);
-            mat[i][m] = c[m];
-            matrix[i].linha[m] = c[m];
-            m_ultimo = m;
+
+            fscanf(imagem, "%d", c);
+            matrix[i][j].r = *c;
+            fscanf(imagem, "%d", c);
+            matrix[i][j].g = *c;
+            fscanf(imagem, "%d", c);
+            matrix[i][j].b = *c;
         }
-        m_ultimo++;
-        mat[i][m_ultimo] = '\n';
-        //if(i != altura*largura ) fputc('\n', output);
     }
-    int inicio  = 0;
-    int final = largura -1;
+    int larguraAux = largura-1;
+    for(int i = 0; i < largura; i++){
+        larguraAux = largura -1;
+        for(int j = 0; j < larguraAux; j++){
 
-    for(int i = 0; i < altura; i++){
-        char temp[1][MAX];
-        int j = inicio;
-        int m = final;
-        while (j < m)
-        {
-            for(int d = 0; mat[m][d] != '\0';d++){
-                temp[0][d] = mat[m][d];
-            }
-            for(int d = 0; mat[j][d] != '\0';d++){
-                mat[m][d] = mat[j][d];
-            }
-            for(int d = 0; temp[0][d] != '\0';d++){
-                mat[j][d] = temp[0][d];
-            }
-            
-            j++;
-            m--;
-        }
-        for (int f = inicio; f <= final; f++)
-        {
-            fputs(mat[f], output);
-           // fputc('\n', output);
-        }
-        inicio = final+1;
-        final += largura;
+            struct pixel temp = matrix[i][j];
+            matrix[i][j] = matrix[i][larguraAux];
+            matrix[i][larguraAux] = temp;
 
+            larguraAux--;
+        }
     }
 
-    //printf("%s", mat[3]);
 
-    //flipH(mat, 0, largura - 1, output);
+    fprintf()
 
-
-
-
-    // corpo(imagem, matrix);
-
-    //printf("matrux = %s", matrix[3].linha);
-
-    //printf("altura = %d\nlargura = %d", altura ,largura);
-    //flipHor(matrix, 0, largura, output);
-
+    
     fclose(imagem);
     fclose(output);
 
