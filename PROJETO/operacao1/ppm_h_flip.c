@@ -74,62 +74,68 @@ void cabeca(FILE *in, FILE *out){
 }
 */
 
+
+
 int main(int argc, char *argv[]){
+    FILE *imagem;
+    FILE *output;
     //abertura dos arquivos enciados como parâmetros
-    FILE *imagem = fopen(argv[1], "r");
-
-    FILE *output = fopen(argv[2], "w");
-
-    //caso haja erro na abertura dos arquivos informa e fecha o programa
-    if (!imagem){
-        printf("Erro na abertura da imagem");
+    if(argc == 3){
+        imagem = fopen(argv[1], "r");
+        output = fopen(argv[2], "w");
+    }
+    else if(argc == 1){
+        imagem = stdin;
+        output = stdout;
+    }
+    else if(argc == 2){
+        imagem  = fopen(argv[1], "r");
+        output = stdout;
+    }
+    if(!stdin || !stdout){
+        printf("ERROR"); 
         exit(1);
-    }
-    if (!output){
-        printf("Erro na abertura do arquivo destino");
-        exit(1);
-    }
+    } 
+        cabeca(imagem, output);
 
-    cabeca(imagem, output);
+        struct pixel matrix[altura][largura];
 
-    struct pixel matrix[altura][largura];
-   
+        int c;
+        for (int i = 0; i < altura; i++){ //importa pixel do arquivo para matriz
+            for (int j = 0; j < largura; j++){
 
-    int c;
-    for (int i = 0; i < altura; i++){ //importa pixel do arquivo para matriz
-        for (int j = 0; j < largura; j++){
-
-            fscanf(imagem, "%d", &c);
-            matrix[i][j].r = c;
-            fscanf(imagem, "%d", &c);
-            matrix[i][j].g = c;
-            fscanf(imagem, "%d", &c);
-            matrix[i][j].b = c;
-            //printf("%d", matrix[i][j].r);
+                fscanf(imagem, "%d", &c);
+                matrix[i][j].r = c;
+                fscanf(imagem, "%d", &c);
+                matrix[i][j].g = c;
+                fscanf(imagem, "%d", &c);
+                matrix[i][j].b = c;
+                //printf("%d", matrix[i][j].r);
+            }
         }
-    }
-    int larguraAux = largura;
-    for(int i = 0; i < altura; i++){
-        larguraAux = largura -1;
-        for(int j = 0; j < larguraAux; j++){
+        int larguraAux = largura;
+        for(int i = 0; i < altura; i++){
+            larguraAux = largura -1;
+            for(int j = 0; j < larguraAux; j++){
 
-            struct pixel temp = matrix[i][j];
-            matrix[i][j] = matrix[i][larguraAux];
-            matrix[i][larguraAux] = temp;
+                struct pixel temp = matrix[i][j];
+                matrix[i][j] = matrix[i][larguraAux];
+                matrix[i][larguraAux] = temp;
 
-            larguraAux--;
+                larguraAux--;
+            }
         }
-    }
 
-    for(int i = 0; i < altura; i++){
-        for(int j = 0; j < largura; j++){
-            fprintf(output, "%d %d %d\n", matrix[i][j].r, matrix[i][j].g, matrix[i][j].b );
+        for(int i = 0; i < altura; i++){
+            for(int j = 0; j < largura; j++){
+                fprintf(output, "%d %d %d\n", matrix[i][j].r, matrix[i][j].g, matrix[i][j].b );
+            }
         }
-    }
 
-    
-    fclose(imagem);
-    fclose(output);
+        
+        fclose(imagem);
+        fclose(output);
+        
 
     return 0;
 }

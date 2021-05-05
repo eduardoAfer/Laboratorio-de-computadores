@@ -28,22 +28,26 @@ void cabeca(FILE* f1, FILE* f2){
 
 int main(int argc, char *argv[])
 {
+    FILE *imagem;
+    FILE *output;
     //abertura dos arquivos enciados como parâmetros
-    FILE *imagem = fopen(argv[1], "r");
-
-    FILE *output = fopen(argv[2], "w");
-
-    //caso haja erro na abertura dos arquivos informa e fecha o programa
-    if (!imagem)
-    {
-        printf("Erro na abertura da imagem");
-        exit(1);
+    if(argc == 3){
+        imagem = fopen(argv[1], "r");
+        output = fopen(argv[2], "w");
     }
-    if (!output)
-    {
-        printf("Erro na abertura do arquivo destino");
-        exit(1);
+    else if(argc == 1){
+        imagem = stdin;
+        output = stdout;
     }
+    else if(argc == 2){
+        imagem  = fopen(argv[1], "r");
+        output = stdout;
+    }
+    if(!stdin || !stdout){
+        printf("ERROR"); 
+        exit(1);
+    } 
+
 
     cabeca(imagem, output);
 
@@ -90,7 +94,7 @@ int main(int argc, char *argv[])
    }
    for(int i = 0; i< altura; i++){
        for(int j = 0; j< largura; j++){
-            fprintf(output, " %d %d %d\n ", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
+            fprintf(output, "%d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
 
        }
    }

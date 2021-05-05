@@ -29,23 +29,25 @@ void cabeca(FILE* f1, FILE* f2){
 
 int main(int argc, char *argv[])
 {
+    FILE *imagem;
+    FILE *output;
     //abertura dos arquivos enciados como parâmetros
-    FILE *imagem = fopen(argv[1], "r");
-
-    FILE *output = fopen(argv[2], "w");
-
-    //caso haja erro na abertura dos arquivos informa e fecha o programa
-    if (!imagem)
-    {
-        printf("Erro na abertura da imagem");
-        exit(1);
+    if(argc == 3){
+        imagem = fopen(argv[1], "r");
+        output = fopen(argv[2], "w");
     }
-    if (!output)
-    {
-        printf("Erro na abertura do arquivo destino");
-        exit(1);
+    else if(argc == 1){
+        imagem = stdin;
+        output = stdout;
     }
-
+    else if(argc == 2){
+        imagem  = fopen(argv[1], "r");
+        output = stdout;
+    }
+    if(!stdin || !stdout){
+        printf("ERROR"); 
+        exit(1);
+    } 
     cabeca(imagem, output);
 
     struct pixel matrix[altura][largura];
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
    
     struct pixel temp;
     int indiceAltura = altura; 
-   for(int m = 0; m < altura && m < indiceAltura; m++){
+   for(int m = 0; m < altura && m < indiceAltura -1; m++){
        indiceAltura--;
        int indiceLargura = largura -1;
        for(int n = 0; n < largura; n++){
@@ -75,13 +77,15 @@ int main(int argc, char *argv[])
             matrix[m][n] = matrix[indiceAltura][indiceLargura];
             matrix[indiceAltura][indiceLargura] = temp;
             indiceLargura--;
+           
 
 
        }     
    }
+
    for(int i = 0; i< altura; i++){
        for(int j = 0; j< largura; j++){
-            fprintf(output, " %d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
+            fprintf(output, "%d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
            
        }
    }

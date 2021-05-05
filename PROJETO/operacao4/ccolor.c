@@ -28,27 +28,31 @@ void cabeca(FILE* f1, FILE* f2){
 
 int main(int argc, char *argv[])
 {
+    FILE *imagem;
+    FILE *output;
     //abertura dos arquivos enciados como parâmetros
-    FILE *imagem = fopen(argv[4], "r");
-
-    FILE *output = fopen(argv[5], "w");
-
+    if(argc == 6){
+        imagem = fopen(argv[4], "r");
+        output = fopen(argv[5], "w");
+    }
+    else if(argc == 4){
+        imagem = stdin;
+        output = stdout;
+    }
+    else if(argc == 5){
+        imagem  = fopen(argv[4], "r");
+        output = stdout;
+    }
+    if(!stdin || !stdout){
+        printf("ERROR"); 
+        exit(1);
+    } 
+    
+   
     int mudaR = atoi(argv[1]);
     int mudaG = atoi (argv[2]);
     int mudaB = atoi(argv[3]);
     
-
-    //caso haja erro na abertura dos arquivos informa e fecha o programa
-    if (!imagem)
-    {
-        printf("Erro na abertura da imagem");
-        exit(1);
-    }
-    if (!output)
-    {
-        printf("Erro na abertura do arquivo destino");
-        exit(1);
-    }
 
     struct pixel matrix[altura][largura];
 
@@ -71,15 +75,23 @@ int main(int argc, char *argv[])
    for(int m = 0; m < altura; m++){
        for(int n = 0; n < largura; n++){
            
-           matrix[m][n].r += mudaR;
-           matrix[m][n].g += mudaG;
-           matrix[m][n].b += mudaB;
+           if(matrix[m][n].r + mudaR > maxColor) matrix[m][n].r = maxColor;
+           else if(matrix[m][n].r + mudaR < 0) matrix[m][n].r = 0;
+           else matrix[m][n].r += mudaR;
+
+           if(matrix[m][n].g + mudaG > maxColor) matrix[m][n].g = maxColor;
+           else if(matrix[m][n].g + mudaG < 0) matrix[m][n].g = 0;
+           else matrix[m][n].g += mudaG;
+
+            if(matrix[m][n].b + mudaB > maxColor) matrix[m][n].b = maxColor;
+            else if(matrix[m][n].b + mudaB < 0) matrix[m][n].b = 0;
+           else matrix[m][n].b += mudaB;
             }
        }     
    
    for(int i = 0; i< altura; i++){
        for(int j = 0; j< largura; j++){
-            fprintf(output, " %d %d %d \n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
+            fprintf(output, "%d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
        }
    }
    
