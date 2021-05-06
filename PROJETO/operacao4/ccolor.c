@@ -70,25 +70,28 @@ int main(int argc, char *argv[])
             matrix[i][j].b = c;
         }
     }
-   
+                printf("%d", c);
+
+
 
    for(int m = 0; m < altura; m++){
        for(int n = 0; n < largura; n++){
-           
-           if(matrix[m][n].r + mudaR > maxColor) matrix[m][n].r = maxColor;
-           else if(matrix[m][n].r + mudaR < 0) matrix[m][n].r = 0;
-           else matrix[m][n].r += mudaR;
 
-           if(matrix[m][n].g + mudaG > maxColor) matrix[m][n].g = maxColor;
+           matrix[m][n].r += mudaR;
+           if(matrix[m][n].r > maxColor) matrix[m][n].r = maxColor;
+           else if(matrix[m][n].r < 0) matrix[m][n].r = 0;
+        
+            matrix[m][n].g += mudaG;
+           if(matrix[m][n].g > maxColor) matrix[m][n].g = maxColor;
            else if(matrix[m][n].g + mudaG < 0) matrix[m][n].g = 0;
-           else matrix[m][n].g += mudaG;
+           
+            matrix[m][n].b += mudaB;
+            if(matrix[m][n].b  > maxColor) matrix[m][n].b = maxColor;
+            else if(matrix[m][n].b  < 0) matrix[m][n].b = 0;
+           
+        }
+    }     
 
-            if(matrix[m][n].b + mudaB > maxColor) matrix[m][n].b = maxColor;
-            else if(matrix[m][n].b + mudaB < 0) matrix[m][n].b = 0;
-           else matrix[m][n].b += mudaB;
-            }
-       }     
-   
    for(int i = 0; i< altura; i++){
        for(int j = 0; j< largura; j++){
             fprintf(output, "%d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );

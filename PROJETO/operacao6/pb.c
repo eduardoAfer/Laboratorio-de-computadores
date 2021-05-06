@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
+#include <math.h>
 #define MAX 20
 
 struct pixel
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         output = stdout;
     }
     else if(argc == 3){
-        imagem  = fopen(argv[1], "r");
+        imagem  = fopen(argv[2], "r");
         output = stdout;
     }
     if(!stdin || !stdout){
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     
    for(int m = 0; m < altura; m++){
        for(int n = 0; n < largura; n++){
-           int G = matrix[m][n].r * 0.2126 + matrix[m][n].g * 0.7152 + matrix[m][n].b * 0.0722;
+           int G = round(matrix[m][n].r * 0.2126 + matrix[m][n].g * 0.7152 + matrix[m][n].b * 0.0722);
            if(G > threshold){
                 matrix[m][n].r = maxColor;
                 matrix[m][n].g = maxColor;
