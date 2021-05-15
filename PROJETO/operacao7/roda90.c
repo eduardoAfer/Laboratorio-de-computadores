@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
-#define MAX 20
 
 struct pixel
 {
@@ -69,17 +67,17 @@ int main(int argc, char *argv[])
   struct pixel matrix2[largura][altura];
   
    
-   for(int m = 0; m < altura; m++){
+   for(int m = 0; m < largura; m++){
         int indiceL = altura -1;
-       for(int n = 0; n < largura; n++){
+       for(int n = 0; n < altura; n++){
           matrix2[m][n] = matrix[indiceL][m];
           indiceL--;
           
        }     
    }
-   for(int i = 0; i< altura; i++){
-       for(int j = 0; j< largura; j++){
-            fprintf(output, "%d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
+   for(int i = 0; i< largura; i++){
+       for(int j = 0; j< altura; j++){
+            fprintf(output, "%d %d %d\n", matrix2[i][j].r,  matrix2[i][j].g,  matrix2[i][j].b );
        }
    }
    

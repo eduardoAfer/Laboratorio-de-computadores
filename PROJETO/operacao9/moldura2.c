@@ -56,24 +56,9 @@ int main(int argc, char *argv[])
 
     cabeca(imagem, output);
 
-    struct pixel matrix[altura][largura];
+   // struct pixel matrix[altura][largura];
     struct pixel matrix2[altura + 2*qntPixel][largura + 2*qntPixel];
-
-    int c;
-    for (int i = 0; i < altura; i++)
-    {
-        for (int j = 0; j < largura; j++)
-        {
-
-            fscanf(imagem, "%d", &c);
-            matrix[i][j].r = c;
-            fscanf(imagem, "%d", &c);
-            matrix[i][j].g = c;
-            fscanf(imagem, "%d", &c);
-            matrix[i][j].b = c;
-        }
-    }
-    for (int i = 0; i < altura + 2*qntPixel; i++)
+     for (int i = 0; i < altura + 2*qntPixel; i++)
     {
         for (int j = 0; j < largura + 2*qntPixel; j++)
         {            
@@ -82,16 +67,22 @@ int main(int argc, char *argv[])
             matrix2[i][j].b = mudaB;
         }
     }
+
+
+    int c;
     for (int i = 0; i < altura; i++)
     {
         for (int j = 0; j < largura; j++)
-        {            
-            matrix2[i+qntPixel][j+qntPixel] = matrix[i][j];
-            
+        {
+
+            fscanf(imagem, "%d", &c);
+            matrix2[i+qntPixel][j+qntPixel].r = c;
+            fscanf(imagem, "%d", &c);
+            matrix2[i+qntPixel][j+qntPixel].g = c;
+            fscanf(imagem, "%d", &c);
+            matrix2[i+qntPixel][j+qntPixel].b = c;
         }
     }
-
-
 
 
     for (int i = 0; i < altura + 2*qntPixel; i++)
