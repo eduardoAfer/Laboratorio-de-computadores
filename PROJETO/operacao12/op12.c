@@ -69,8 +69,9 @@ int main(int argc, char *argv[])
     int y = atoi(argv[2]);
 
 
+
     cabeca1(imagem, output);
-    cabeca2(imagem);
+    cabeca2(imagem2);
 
     struct pixel matrix[altura][largura];
     struct pixel matrix2[altura2][largura2];
@@ -97,7 +98,6 @@ int main(int argc, char *argv[])
         {
 
             fscanf(imagem2, "%d", &d);
-            printf("%d", d);
             matrix2[i][j].r = d;
             fscanf(imagem2, "%d", &d);
             matrix2[i][j].g = d;
@@ -115,20 +115,14 @@ int main(int argc, char *argv[])
         }
     }
 
-/*
+
    for(int i = 0; i< altura; i++){
        for(int j = 0; j< largura; j++){
             fprintf(output, "%d %d %d\n", matrix[i][j].r,  matrix[i][j].g,  matrix[i][j].b );
 
        }
    }
-*/
- for(int i = 0; i< altura2; i++){
-       for(int j = 0; j< largura2; j++){
-            fprintf(output, "%d %d %d\n", matrix2[i][j].r,  matrix2[i][j].g,  matrix2[i][j].b );
 
-       }
-   }
   
     fclose(imagem);
     fclose(output);

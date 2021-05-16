@@ -20,6 +20,8 @@ struct ponto{
 int altura;
 int largura;
 int maxColor;
+int alturaMat2;
+int larguraMat2;
 
 void cabeca(FILE* f1, FILE* f2){
 
@@ -27,7 +29,7 @@ void cabeca(FILE* f1, FILE* f2){
     fgets(str, 3, f1);
     fprintf(f2, "%s\n", str);
     fscanf(f1, "%d %d", &largura, &altura);
-    fprintf(f2,"%d %d\n",largura, altura);
+    fprintf(f2,"%d %d\n",larguraMat2, alturaMat2);
     fscanf(f1, "%d", &maxColor);
     fprintf(f2,"%d\n",maxColor);
 }
@@ -61,10 +63,11 @@ int main(int argc, char *argv[])
     p2.a = atoi(argv[3]);
     p2.b = atoi(argv[4]);
 
+    alturaMat2 = (p2.b - p1.b) +1;
+    larguraMat2 = (p2.a - p1.a) + 1;
+
     cabeca(imagem, output);
 
-    int alturaMat2 = (p2.a - p1.a) + 1;
-    int larguraMat2 = (p2.b - p1.b) +1;
 
     struct pixel matrix[altura][largura];
     struct pixel matrix2[alturaMat2][larguraMat2];
@@ -84,11 +87,14 @@ int main(int argc, char *argv[])
             matrix[i][j].b = c;
         }
     }
-    
-   for(int m = 0; m < alturaMat2; m++){
-       for(int n = 0; n < larguraMat2; n++){
+    int f = -1, k = 0;
+   for(int m = p1.a; m < alturaMat2; m++){
+       k= 0;
+       f++;
+       for(int n = p1.b; n < larguraMat2; n++){
 
-           matrix2[m][n] =  matrix[m + p1.a][n + p1.b];
+           matrix2[f][k] =  matrix[m][n];
+           k++;
        
             }
        }    

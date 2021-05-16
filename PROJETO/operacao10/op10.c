@@ -39,7 +39,7 @@ void cabeca2(FILE* f1, FILE* f2){
     largura1e2 = largura1 + largura2;
     if(altura1 < altura2) altura1e2 = altura1;
     else altura1e2 = altura2;
-    fprintf(f2,"%d %d\n", altura1e2, largura1e2);
+    fprintf(f2,"%d %d\n", largura1e2, altura1e2);
     fscanf(f1, "%d", &maxColor2);
     if(maxColor1 < maxColor2) maxColor1e2 = maxColor1e2;
     else maxColor1e2 = maxColor1;
@@ -91,9 +91,6 @@ int main(int argc, char *argv[])
     cabeca(imagem);
     cabeca2(imagem2, output);
     
-
-    struct pixel matrix1[altura1][largura1];
-    struct pixel matrix2[altura2][largura2];
     struct pixel matrixTotal[altura1e2][largura1e2];
 
     int c;
