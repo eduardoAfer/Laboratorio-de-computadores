@@ -87,14 +87,12 @@ int main(int argc, char *argv[])
             matrix[i][j].b = c;
         }
     }
-    int f = -1, k = 0;
+   
    for(int m = p1.a; m < alturaMat2; m++){
-       k= 0;
-       f++;
        for(int n = p1.b; n < larguraMat2; n++){
 
-           matrix2[f][k] =  matrix[m][n];
-           k++;
+           matrix2[m - p1.a][n - p1.b] =  matrix[m][n];
+    
        
             }
        }    

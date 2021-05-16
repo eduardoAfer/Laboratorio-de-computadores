@@ -17,12 +17,17 @@ int altura;
 int largura;
 int maxColor;
 
-void cabeca(FILE* f1, FILE* f2){
+int larguraMat;
+int alturaMat;
+
+void cabeca(FILE* f1, FILE* f2, int qntPixel){
     char str[3];
     fgets(str, 3, f1);
     fprintf(f2, "%s\n", str);
     fscanf(f1, "%d %d", &largura, &altura);
-    fprintf(f2,"%d %d\n",largura, altura);
+    alturaMat = altura + 2*qntPixel;
+    larguraMat = largura + 2*qntPixel;
+    fprintf(f2,"%d %d\n",larguraMat, alturaMat);
     fscanf(f1, "%d", &maxColor);
     fprintf(f2,"%d\n",maxColor);
 }
@@ -54,10 +59,11 @@ int main(int argc, char *argv[])
     int mudaB = atoi(argv[4]);
     
 
-    cabeca(imagem, output);
+    cabeca(imagem, output, qntPixel);
+
 
    // struct pixel matrix[altura][largura];
-    struct pixel matrix2[altura + 2*qntPixel][largura + 2*qntPixel];
+    struct pixel matrix2[alturaMat][larguraMat];
      for (int i = 0; i < altura + 2*qntPixel; i++)
     {
         for (int j = 0; j < largura + 2*qntPixel; j++)
