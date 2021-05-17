@@ -44,7 +44,8 @@ int main(int argc, char *argv[])
     FILE *imagem;
     FILE *imagem2;
     FILE *output;
-    //abertura dos arquivos enciados como parâmetros
+
+    //abertura dos arquivos iniciados como parâmetros
     if(argc == 6){
         imagem = fopen(argv[4], "r");
         imagem2 = fopen(argv[3], "r");

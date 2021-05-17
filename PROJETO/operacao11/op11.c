@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     struct ponto p1, p2;
      
     p1.a = atoi(argv[1]);
-    p2.b = atoi(argv[2]);
+    p1.b = atoi(argv[2]);
     p2.a = atoi(argv[3]);
     p2.b = atoi(argv[4]);
 
