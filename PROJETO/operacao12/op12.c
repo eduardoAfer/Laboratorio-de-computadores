@@ -25,17 +25,18 @@ void cabeca1(FILE* f1, FILE* f2){
     fgets(str, 3, f1);
     fprintf(f2, "%s\n", str);
     fscanf(f1, "%d %d", &largura, &altura);
-    fprintf(f2,"%d %d\n",largura, altura);
+   fprintf(f2,"%d %d\n",largura, altura);
     fscanf(f1, "%d", &maxColor);
-    fprintf(f2,"%d\n",maxColor);
 }
 
 
-void cabeca2(FILE* f1){
+void cabeca2(FILE* f1, FILE *f2){
     char str[3];
     fgets(str, 3, f1);
     fscanf(f1, "%d %d", &largura2, &altura2);
     fscanf(f1, "%d", &maxColor2);
+    if(maxColor > maxColor2) fprintf(f2, "%d\n", maxColor);
+    else fprintf(f2, "%d\n", maxColor2);
 }
 
 
@@ -52,11 +53,10 @@ int main(int argc, char *argv[])
         output = fopen(argv[5], "w");
     }
     else if(argc == 3){
-        imagem2 = stdin;
         imagem = stdin;
         output = stdout;
     }
-    else if(argc == 4){
+    else if(argc == 5){
         imagem  = fopen(argv[4], "r");
         imagem2 = fopen(argv[3], "r");
         output = stdout;
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
 
     cabeca1(imagem, output);
-    cabeca2(imagem2);
+    cabeca2(imagem2, output);
 
     struct pixel matrix[altura][largura];
     struct pixel matrix2[altura2][largura2];
@@ -107,11 +107,12 @@ int main(int argc, char *argv[])
         }
     }
 
-
    
-    for(int i = x; i < altura || i < altura2; i++){
-        for(int j = y; j< largura || j < largura2; j++){
-            matrix[i][j] = matrix2[i -x][j- y];
+    for(int i = x; i < altura && (i - x  < altura2); i++){
+        for(int j = y; j < largura && j - y < largura2; j++){
+           
+
+            matrix[i][j] = matrix2[i - x][j - y];
 
         }
     }

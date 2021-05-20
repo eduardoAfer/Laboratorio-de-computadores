@@ -29,9 +29,6 @@ void cabeca(FILE* f1, FILE* f2){
     fgets(str, 3, f1);
     fprintf(f2, "%s\n", str);
     fscanf(f1, "%d %d", &largura, &altura);
-    fprintf(f2,"%d %d\n",larguraMat2, alturaMat2);
-    fscanf(f1, "%d", &maxColor);
-    fprintf(f2,"%d\n",maxColor);
 }
 
 int main(int argc, char *argv[])
@@ -63,10 +60,27 @@ int main(int argc, char *argv[])
     p2.a = atoi(argv[3]);
     p2.b = atoi(argv[4]);
 
+    cabeca(imagem, output);
+
+
+    // casos em que os pontos pedidos estao fora da imagem 
+    if(p1.a < 0) p1.a = 0;
+    if(p1.a >= altura) p1.a = altura - 1;
+    if(p1.b < 0) p1.b = 0;
+    if(p1.b >= largura) p1.b = largura -1;
+
+    if(p2.a < 0) p2.a = 0;
+    if(p2.a >= altura) p2.a = altura - 1;
+    if(p2.b < 0) p2.b = 0;
+    if(p2.b >= largura) p2.b = largura -1;
+
+
     alturaMat2 = (p2.b - p1.b) +1;
     larguraMat2 = (p2.a - p1.a) + 1;
 
-    cabeca(imagem, output);
+    fprintf(output,"%d %d\n",larguraMat2, alturaMat2);
+    fscanf(imagem, "%d", &maxColor);
+    fprintf(output,"%d\n",maxColor);
 
 
     struct pixel matrix[altura][largura];
@@ -97,8 +111,8 @@ int main(int argc, char *argv[])
             }
        }    
    
-   for(int i = 0; i< altura; i++){
-       for(int j = 0; j< largura; j++){
+   for(int i = 0; i< alturaMat2; i++){
+       for(int j = 0; j< larguraMat2; j++){
             fprintf(output, "%d %d %d\n", matrix2[i][j].r,  matrix2[i][j].g,  matrix2[i][j].b );
        }
    }  
