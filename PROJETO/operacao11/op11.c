@@ -64,17 +64,26 @@ int main(int argc, char *argv[])
 
 
     // casos em que os pontos pedidos estao fora da imagem 
-    if(p1.a < 0) p1.a = 0;
+  /*  if(p1.a < 0) p1.a = 0;
     if(p1.a >= altura) p1.a = altura - 1;
     if(p1.b < 0) p1.b = 0;
     if(p1.b >= largura) p1.b = largura -1;
 
+*/
+
+    if(p2.a >= altura) alturaMat2 = altura - p1.a;
+    else alturaMat2 = p2.a - p1.a +1;
+
+
+    if(p2.b >= largura) alturaMat2 = altura - p1.b;
+    else alturaMat2 = p2.b - p1.b +1;
+/*
     if(p2.a < 0) p2.a = 0;
     if(p2.a >= altura) p2.a = altura - 1;
     if(p2.b < 0) p2.b = 0;
     if(p2.b >= largura) p2.b = largura -1;
 
-
+*/
     alturaMat2 = (p2.b - p1.b) +1;
     larguraMat2 = (p2.a - p1.a) + 1;
 
@@ -102,11 +111,10 @@ int main(int argc, char *argv[])
         }
     }
    
-   for(int m = p1.a; m < alturaMat2; m++){
-       for(int n = p1.b; n < larguraMat2; n++){
+   for(int i_r = 0, i_Img = p1.a; i_r < alturaMat2 && i_Img < altura; i_r++, i_Img++){
+       for(int j_r = 0, j_Img = p1.b; j_r < larguraMat2 && j_Img < largura; j_r++, j_Img++){
 
-           matrix2[m - p1.a][n - p1.b] =  matrix[m][n];
-    
+           matrix2[i_r][j_r] =  matrix[i_Img][j_Img];
        
             }
        }    
