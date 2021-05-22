@@ -84,8 +84,7 @@ int main(int argc, char *argv[])
     if(p2.b >= largura) p2.b = largura -1;
 
 */
-    alturaMat2 = (p2.b - p1.b) +1;
-    larguraMat2 = (p2.a - p1.a) + 1;
+  
 
     fprintf(output,"%d %d\n",larguraMat2, alturaMat2);
     fscanf(imagem, "%d", &maxColor);
