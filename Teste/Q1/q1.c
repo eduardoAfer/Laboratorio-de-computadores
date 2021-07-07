@@ -25,6 +25,7 @@ void cabeca(FILE* f1, FILE* f2){
 
 
 int main(int argc, char *argv[]){
+    int media_R = 0, media_G = 0, media_B = 0;
     FILE *imagem;
     FILE *output;
     //abertura dos arquivos enciados como parâmetros
@@ -55,22 +56,57 @@ int main(int argc, char *argv[]){
             for (int j = 0; j < largura; j++){
 
                 fscanf(imagem, "%d", &c);
-                matrix[i][j].r = c;        
+                matrix[i][j].r = c;
+                media_R += c;        
                 fscanf(imagem, "%d", &c);
-                matrix[i][j].g = 0;
+                matrix[i][j].g = c;
+                media_G += c;
                 fscanf(imagem, "%d", &c);
-                matrix[i][j].b = 0;
+                matrix[i][j].b = c;
+                media_B += c;
+            }
+        }
+
+        media_R = media_R/(altura * largura);
+        media_G = media_G/(altura * largura);
+        media_B = media_B/(altura * largura);
+    
+        if(media_R > media_G && media_R > media_B){
+
+            for (int i = 0; i < altura; i++){ //importa pixel do arquivo para matriz
+                for (int j = 0; j < largura; j++){
+
+                    matrix[i][j].g = 0;
+                    matrix[i][j].b = 0;
+                }
+            }
+        }
+         if(media_G > media_R && media_G > media_B){
+            for (int i = 0; i < altura; i++){ //importa pixel do arquivo para matriz
+                for (int j = 0; j < largura; j++){
+
+                    matrix[i][j].r = 0;
+                    matrix[i][j].b = 0;
+                }
+            }
+        }
+         if(media_B > media_R && media_B > media_G ){
+
+            for (int i = 0; i < altura; i++){ //importa pixel do arquivo para matriz
+                for (int j = 0; j < largura; j++){
+
+                    matrix[i][j].r = 0;
+                    matrix[i][j].g = 0;
+                }
             }
         }
         
-
         for(int i = 0; i < altura; i++){
             for(int j = 0; j < largura; j++){
                 fprintf(output, "%d %d %d\n", matrix[i][j].r, matrix[i][j].g, matrix[i][j].b );
             }
         }
 
-        
         fclose(imagem);
         fclose(output);
         
