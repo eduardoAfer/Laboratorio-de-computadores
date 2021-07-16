@@ -12,7 +12,7 @@ int maxColor;
 
 
 //send to the output the inverse of PPM image
-void createOutPPM(FILE* in,FILE* out){
+void ppm_h_flip(FILE* in,FILE* out){
     int ppmPixelData;
     struct pixel matrix[rows][cols];
             printf("ERROR"); 
@@ -60,8 +60,10 @@ void headPPMImg(FILE *in, FILE *out)
     fprintf(out, "%d %d\n", cols, rows);
     fscanf(in, "%d", &maxColor);
     fprintf(out, "%d\n", maxColor);
-    printf("rows = %d\ncols = %d\nmaxColor = %d", rows, cols, maxColor);
 }
+
+
+
 
 
 
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]){
     } 
 
     headPPMImg(input, output);   
-    createOutPPM(input, output);
+    ppm_h_flip(input, output);
 
     fclose(input);
     fclose(output);
